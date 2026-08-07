@@ -10,6 +10,7 @@ function AppRoutes() {
       <Route path="/" element={<Dashboard />} />
       <Route path="/students" element={<Students />} />
       <Route path="/courses" element={<Courses />} />
+      <Route path="/enrollments" element={<Enrollments />} />
     
     </Routes>
   )

@@ -1,10 +1,13 @@
 import { BrowserRouter } from 'react-router-dom'
+import AdminLayout from './layouts/AdminLayout'
 import AppRoutes from './routes/AppRoutes'
 
 function App() {
   return (
     <BrowserRouter>
-      <AppRoutes />
+      <AdminLayout>
+        <AppRoutes />
+      </AdminLayout>
     </BrowserRouter>
   )
 }

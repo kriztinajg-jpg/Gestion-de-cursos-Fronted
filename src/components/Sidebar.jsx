@@ -33,10 +33,6 @@ function Sidebar() {
           </NavLink>
         ))}
       </nav>
-
-      <div className="px-6 py-4 border-t border-slate-800 text-xs text-slate-400">
-        v0.1 · Clase 01
-      </div>
     </aside>
   )
 }
