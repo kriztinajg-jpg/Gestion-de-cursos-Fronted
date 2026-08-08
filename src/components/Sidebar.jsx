@@ -24,7 +24,7 @@ function Sidebar() {
             className={({ isActive }) =>
               `block px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                 isActive
-                  ? 'bg-blue-600 text-white'
+                   ? 'bg-green-600 text-white'
                   : 'text-slate-300 hover:bg-slate-800 hover:text-white'
               }`
             }
