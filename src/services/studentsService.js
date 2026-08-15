@@ -1,5 +1,6 @@
 import { supabase } from '../config/supabase'
 
+
 export async function getStudents() {
   const { data, error } = await supabase
     .from('estudiantes')
