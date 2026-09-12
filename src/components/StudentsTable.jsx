@@ -1,4 +1,4 @@
-function StudentsTable({ students }) {
+function StudentsTable({ students, onEdit, onDelete }) {
   return (
     <div className="bg-white rounded-xl shadow border border-gray-100 overflow-hidden">
       <table className="w-full text-left">
@@ -7,6 +7,7 @@ function StudentsTable({ students }) {
             <th className="px-4 py-3 text-sm font-semibold text-gray-600">Nombres</th>
             <th className="px-4 py-3 text-sm font-semibold text-gray-600">Apellidos</th>
             <th className="px-4 py-3 text-sm font-semibold text-gray-600">Email</th>
+            <th className="px-4 py-3 text-sm font-semibold text-gray-600 text-right">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -15,15 +16,22 @@ function StudentsTable({ students }) {
               <td className="px-4 py-3 text-gray-800">{student.nombres}</td>
               <td className="px-4 py-3 text-gray-800">{student.apellidos}</td>
               <td className="px-4 py-3 text-gray-500">{student.email}</td>
-            </tr>
-          ))}
-          {students.length === 0 && (
-            <tr>
-              <td colSpan="3" className="px-4 py-6 text-center text-gray-400">
-                No se encontraron estudiantes.
+              <td className="px-4 py-3 text-right space-x-3 whitespace-nowrap">
+                <button
+                  onClick={() => onEdit(student)}
+                  className="text-green-600 hover:underline text-sm font-medium"
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={() => onDelete(student)}
+                  className="text-red-600 hover:underline text-sm font-medium"
+                >
+                  Eliminar
+                </button>
               </td>
             </tr>
-          )}
+          ))}
         </tbody>
       </table>
     </div>
