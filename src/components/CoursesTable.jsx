@@ -1,4 +1,4 @@
-function CoursesTable({ courses }) {
+function CoursesTable({ courses, onEdit, onDelete }) {
   return (
     <div className="bg-white rounded-xl shadow border border-gray-100 overflow-hidden">
       <table className="w-full text-left">
@@ -7,6 +7,8 @@ function CoursesTable({ courses }) {
             <th className="px-4 py-3 text-sm font-semibold text-gray-600">Nombre</th>
             <th className="px-4 py-3 text-sm font-semibold text-gray-600">Descripción</th>
             <th className="px-4 py-3 text-sm font-semibold text-gray-600">Créditos</th>
+            <th className="px-4 py-3 text-sm font-semibold text-gray-600">Cupo</th>
+            <th className="px-4 py-3 text-sm font-semibold text-gray-600 text-right">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -15,15 +17,23 @@ function CoursesTable({ courses }) {
               <td className="px-4 py-3 text-gray-800 font-medium">{course.nombre}</td>
               <td className="px-4 py-3 text-gray-500">{course.descripcion}</td>
               <td className="px-4 py-3 text-gray-500">{course.creditos}</td>
-            </tr>
-          ))}
-          {courses.length === 0 && (
-            <tr>
-              <td colSpan="3" className="px-4 py-6 text-center text-gray-400">
-                No se encontraron cursos.
+              <td className="px-4 py-3 text-gray-500">{course.cupo_maximo}</td>
+              <td className="px-4 py-3 text-right space-x-3 whitespace-nowrap">
+                <button
+                  onClick={() => onEdit(course)}
+                  className="text-green-600 hover:underline text-sm font-medium"
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={() => onDelete(course)}
+                  className="text-red-600 hover:underline text-sm font-medium"
+                >
+                  Eliminar
+                </button>
               </td>
             </tr>
-          )}
+          ))}
         </tbody>
       </table>
     </div>
