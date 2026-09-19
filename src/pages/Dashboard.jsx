@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import StatCard from '../components/StatCard'
-import { getStats } from '../services/statsService'
-
+import { getStats } from '../services/statsServiceBD'
 function Dashboard() {
   const [stats, setStats] = useState({
     students: 0,

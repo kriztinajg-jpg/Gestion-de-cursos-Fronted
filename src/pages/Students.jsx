@@ -4,7 +4,7 @@ import {
   createStudent,
   updateStudent,
   deleteStudent,
-} from '../services/studentsService'
+} from '../services/studentsServiceBD'
 import SearchBar from '../components/SearchBar'
 import StudentsTable from '../components/StudentsTable'
 import StudentForm from '../components/StudentForm'
@@ -106,7 +106,7 @@ function Students() {
       <ConfirmDialog
         open={!!deleteTarget}
         title="Eliminar estudiante"
-        message={`¿Seguro que deseas eliminar a ${deleteTarget?.nombres ?? ''} ${deleteTarget?.apellidos ?? ''}? Esta acción no se puede deshacer.`}
+        message={`¿Seguro que deseas eliminar a ${deleteTarget?.firstName ?? ''} ${deleteTarget?.lastName ?? ''}? Esta acción no se puede deshacer.`}
         onConfirm={confirmDelete}
         onCancel={() => setDeleteTarget(null)}
       />

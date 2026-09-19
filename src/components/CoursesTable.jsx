@@ -4,9 +4,9 @@ function CoursesTable({ courses, onEdit, onDelete }) {
       <table className="w-full text-left">
         <thead className="bg-gray-50 border-b border-gray-200">
           <tr>
+            <th className="px-4 py-3 text-sm font-semibold text-gray-600">Código</th>
             <th className="px-4 py-3 text-sm font-semibold text-gray-600">Nombre</th>
             <th className="px-4 py-3 text-sm font-semibold text-gray-600">Descripción</th>
-            <th className="px-4 py-3 text-sm font-semibold text-gray-600">Créditos</th>
             <th className="px-4 py-3 text-sm font-semibold text-gray-600">Cupo</th>
             <th className="px-4 py-3 text-sm font-semibold text-gray-600 text-right">Acciones</th>
           </tr>
@@ -14,10 +14,10 @@ function CoursesTable({ courses, onEdit, onDelete }) {
         <tbody>
           {courses.map((course) => (
             <tr key={course.id} className="border-b border-gray-100 last:border-0">
-              <td className="px-4 py-3 text-gray-800 font-medium">{course.nombre}</td>
-              <td className="px-4 py-3 text-gray-500">{course.descripcion}</td>
-              <td className="px-4 py-3 text-gray-500">{course.creditos}</td>
-              <td className="px-4 py-3 text-gray-500">{course.cupo_maximo}</td>
+              <td className="px-4 py-3 text-gray-800 font-medium">{course.code}</td>
+              <td className="px-4 py-3 text-gray-800">{course.name}</td>
+              <td className="px-4 py-3 text-gray-500">{course.description}</td>
+              <td className="px-4 py-3 text-gray-500">{course.maxCapacity}</td>
               <td className="px-4 py-3 text-right space-x-3 whitespace-nowrap">
                 <button
                   onClick={() => onEdit(course)}

@@ -4,7 +4,7 @@ import {
   createCourse,
   updateCourse,
   deleteCourse,
-} from '../services/coursesService'
+} from '../services/coursesServiceBD'
 import CoursesTable from '../components/CoursesTable'
 import CourseForm from '../components/CourseForm'
 import ConfirmDialog from '../components/ConfirmDialog'
@@ -95,7 +95,7 @@ function Courses() {
       <ConfirmDialog
         open={!!deleteTarget}
         title="Eliminar curso"
-        message={`¿Seguro que deseas eliminar "${deleteTarget?.nombre ?? ''}"? Esta acción no se puede deshacer.`}
+        message={`¿Seguro que deseas eliminar "${deleteTarget?.name ?? ''}"? Esta acción no se puede deshacer.`}
         onConfirm={confirmDelete}
         onCancel={() => setDeleteTarget(null)}
       />

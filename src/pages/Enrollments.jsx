@@ -1,10 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
-import {
-  getEnrollments,
-  createEnrollment,
-  updateEnrollmentStatus,
-  deleteEnrollment,
-} from '../services/enrollmentsService'
+import { getEnrollments, createEnrollment, cancelEnrollment } from '../services/enrollmentsServiceBD'
+import { getStudents } from '../services/studentsServiceBD'
+import { getCourses } from '../services/coursesServiceBD'
 import EnrollmentsTable from '../components/EnrollmentsTable'
 import EnrollmentForm from '../components/EnrollmentForm'
 import ConfirmDialog from '../components/ConfirmDialog'
@@ -14,18 +11,26 @@ import SearchBar from '../components/SearchBar'
 
 function Enrollments() {
   const [enrollments, setEnrollments] = useState([])
+  const [students, setStudents] = useState([])
+  const [courses, setCourses] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
 
   const [formOpen, setFormOpen] = useState(false)
-  const [deleteTarget, setDeleteTarget] = useState(null)
+  const [cancelTarget, setCancelTarget] = useState(null)
 
-  async function loadEnrollments() {
+  async function loadAll() {
     setLoading(true)
     try {
-      const data = await getEnrollments()
-      setEnrollments(data)
+      const [enrollmentsData, studentsData, coursesData] = await Promise.all([
+        getEnrollments(),
+        getStudents(),
+        getCourses(),
+      ])
+      setEnrollments(enrollmentsData)
+      setStudents(studentsData)
+      setCourses(coursesData)
       setError('')
     } catch (err) {
       console.error('Error cargando matrículas:', err)
@@ -36,37 +41,34 @@ function Enrollments() {
   }
 
   useEffect(() => {
-    loadEnrollments()
+    loadAll()
   }, [])
 
   const filteredEnrollments = useMemo(() => {
     const term = search.trim().toLowerCase()
     if (!term) return enrollments
     return enrollments.filter((item) => {
-      const studentName = `${item.estudiantes?.nombres ?? ''} ${item.estudiantes?.apellidos ?? ''}`
-      const courseName = item.cursos?.nombre ?? ''
+      const student = students.find((s) => s.id === item.studentId)
+      const course = courses.find((c) => c.id === item.courseId)
+      const studentName = `${student?.firstName ?? ''} ${student?.lastName ?? ''}`
+      const courseName = course?.name ?? ''
       return (
         studentName.toLowerCase().includes(term) ||
         courseName.toLowerCase().includes(term)
       )
     })
-  }, [enrollments, search])
+  }, [enrollments, students, courses, search])
 
   async function handleSubmit(form) {
     await createEnrollment(form)
     setFormOpen(false)
-    await loadEnrollments()
+    await loadAll()
   }
 
-  async function handleChangeStatus(item, estado) {
-    await updateEnrollmentStatus(item.id, estado)
-    await loadEnrollments()
-  }
-
-  async function confirmDelete() {
-    await deleteEnrollment(deleteTarget.id)
-    setDeleteTarget(null)
-    await loadEnrollments()
+  async function confirmCancel() {
+    await cancelEnrollment(cancelTarget.id)
+    setCancelTarget(null)
+    await loadAll()
   }
 
   return (
@@ -98,8 +100,9 @@ function Enrollments() {
       ) : (
         <EnrollmentsTable
           enrollments={filteredEnrollments}
-          onChangeStatus={handleChangeStatus}
-          onDelete={setDeleteTarget}
+          students={students}
+          courses={courses}
+          onCancel={setCancelTarget}
         />
       )}
 
@@ -110,11 +113,11 @@ function Enrollments() {
       />
 
       <ConfirmDialog
-        open={!!deleteTarget}
-        title="Eliminar matrícula"
-        message="¿Seguro que deseas eliminar esta matrícula? Esta acción no se puede deshacer."
-        onConfirm={confirmDelete}
-        onCancel={() => setDeleteTarget(null)}
+        open={!!cancelTarget}
+        title="Cancelar matrícula"
+        message="¿Seguro que deseas cancelar esta matrícula?"
+        onConfirm={confirmCancel}
+        onCancel={() => setCancelTarget(null)}
       />
     </div>
   )

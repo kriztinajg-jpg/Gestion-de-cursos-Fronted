@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import PrimaryButton from './PrimaryButton'
 
-const emptyForm = { nombres: '', apellidos: '', email: '' }
+const emptyForm = { firstName: '', lastName: '', email: '', birthDate: '' }
 
 function StudentForm({ open, initialData, onSubmit, onCancel }) {
   const [form, setForm] = useState(emptyForm)
@@ -10,9 +10,10 @@ function StudentForm({ open, initialData, onSubmit, onCancel }) {
   useEffect(() => {
     if (initialData) {
       setForm({
-        nombres: initialData.nombres ?? '',
-        apellidos: initialData.apellidos ?? '',
+        firstName: initialData.firstName ?? '',
+        lastName: initialData.lastName ?? '',
         email: initialData.email ?? '',
+        birthDate: initialData.birthDate ?? '',
       })
     } else {
       setForm(emptyForm)
@@ -28,7 +29,7 @@ function StudentForm({ open, initialData, onSubmit, onCancel }) {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    if (!form.nombres || !form.apellidos || !form.email) {
+    if (!form.firstName || !form.lastName || !form.email || !form.birthDate) {
       setError('Todos los campos son obligatorios.')
       return
     }
@@ -50,8 +51,8 @@ function StudentForm({ open, initialData, onSubmit, onCancel }) {
           <div>
             <label className="text-sm font-medium text-gray-600">Nombres</label>
             <input
-              name="nombres"
-              value={form.nombres}
+              name="firstName"
+              value={form.firstName}
               onChange={handleChange}
               className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -60,8 +61,8 @@ function StudentForm({ open, initialData, onSubmit, onCancel }) {
           <div>
             <label className="text-sm font-medium text-gray-600">Apellidos</label>
             <input
-              name="apellidos"
-              value={form.apellidos}
+              name="lastName"
+              value={form.lastName}
               onChange={handleChange}
               className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -73,6 +74,17 @@ function StudentForm({ open, initialData, onSubmit, onCancel }) {
               type="email"
               name="email"
               value={form.email}
+              onChange={handleChange}
+              className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-gray-600">Fecha de nacimiento</label>
+            <input
+              type="date"
+              name="birthDate"
+              value={form.birthDate}
               onChange={handleChange}
               className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import PrimaryButton from './PrimaryButton'
 
-const emptyForm = { nombre: '', descripcion: '', creditos: '', cupo_maximo: '30' }
+const emptyForm = { code: '', name: '', description: '', maxCapacity: '30' }
 
 function CourseForm({ open, initialData, onSubmit, onCancel }) {
   const [form, setForm] = useState(emptyForm)
@@ -10,10 +10,10 @@ function CourseForm({ open, initialData, onSubmit, onCancel }) {
   useEffect(() => {
     if (initialData) {
       setForm({
-        nombre: initialData.nombre ?? '',
-        descripcion: initialData.descripcion ?? '',
-        creditos: initialData.creditos ?? '',
-        cupo_maximo: initialData.cupo_maximo ?? '30',
+        code: initialData.code ?? '',
+        name: initialData.name ?? '',
+        description: initialData.description ?? '',
+        maxCapacity: initialData.maxCapacity ?? '30',
       })
     } else {
       setForm(emptyForm)
@@ -29,8 +29,8 @@ function CourseForm({ open, initialData, onSubmit, onCancel }) {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    if (!form.nombre) {
-      setError('El nombre del curso es obligatorio.')
+    if (!form.code || !form.name || !form.maxCapacity) {
+      setError('Código, nombre y cupo máximo son obligatorios.')
       return
     }
     try {
@@ -49,10 +49,20 @@ function CourseForm({ open, initialData, onSubmit, onCancel }) {
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <div>
+            <label className="text-sm font-medium text-gray-600">Código</label>
+            <input
+              name="code"
+              value={form.code}
+              onChange={handleChange}
+              className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          <div>
             <label className="text-sm font-medium text-gray-600">Nombre</label>
             <input
-              name="nombre"
-              value={form.nombre}
+              name="name"
+              value={form.name}
               onChange={handleChange}
               className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -61,38 +71,24 @@ function CourseForm({ open, initialData, onSubmit, onCancel }) {
           <div>
             <label className="text-sm font-medium text-gray-600">Descripción</label>
             <textarea
-              name="descripcion"
-              value={form.descripcion}
+              name="description"
+              value={form.description}
               onChange={handleChange}
               rows={3}
               className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="text-sm font-medium text-gray-600">Créditos</label>
-              <input
-                type="number"
-                min="0"
-                name="creditos"
-                value={form.creditos}
-                onChange={handleChange}
-                className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-              />
-            </div>
-
-            <div>
-              <label className="text-sm font-medium text-gray-600">Cupo máximo</label>
-              <input
-                type="number"
-                min="1"
-                name="cupo_maximo"
-                value={form.cupo_maximo}
-                onChange={handleChange}
-                className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-              />
-            </div>
+          <div>
+            <label className="text-sm font-medium text-gray-600">Cupo máximo</label>
+            <input
+              type="number"
+              min="1"
+              name="maxCapacity"
+              value={form.maxCapacity}
+              onChange={handleChange}
+              className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
           </div>
 
           {error && <p className="text-sm text-red-600">{error}</p>}

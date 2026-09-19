@@ -7,15 +7,17 @@ function StudentsTable({ students, onEdit, onDelete }) {
             <th className="px-4 py-3 text-sm font-semibold text-gray-600">Nombres</th>
             <th className="px-4 py-3 text-sm font-semibold text-gray-600">Apellidos</th>
             <th className="px-4 py-3 text-sm font-semibold text-gray-600">Email</th>
+            <th className="px-4 py-3 text-sm font-semibold text-gray-600">Fecha nacimiento</th>
             <th className="px-4 py-3 text-sm font-semibold text-gray-600 text-right">Acciones</th>
           </tr>
         </thead>
         <tbody>
           {students.map((student) => (
             <tr key={student.id} className="border-b border-gray-100 last:border-0">
-              <td className="px-4 py-3 text-gray-800">{student.nombres}</td>
-              <td className="px-4 py-3 text-gray-800">{student.apellidos}</td>
+              <td className="px-4 py-3 text-gray-800">{student.firstName}</td>
+              <td className="px-4 py-3 text-gray-800">{student.lastName}</td>
               <td className="px-4 py-3 text-gray-500">{student.email}</td>
+              <td className="px-4 py-3 text-gray-500">{student.birthDate}</td>
               <td className="px-4 py-3 text-right space-x-3 whitespace-nowrap">
                 <button
                   onClick={() => onEdit(student)}
